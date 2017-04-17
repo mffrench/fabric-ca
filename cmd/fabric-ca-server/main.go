@@ -24,7 +24,6 @@ import (
 	"github.com/hyperledger/fabric-ca/lib"
 	"github.com/hyperledger/fabric-ca/util"
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
 
@@ -67,6 +66,7 @@ func init() {
 	tags := map[string]string{
 		"help.csr.cn":           "The common name field of the certificate signing request to a parent fabric-ca-server",
 		"help.csr.serialnumber": "The serial number in a certificate signing request to a parent fabric-ca-server",
+		"help.csr.hosts":        "A list of space-separated host names in a certificate signing request to a parent fabric-ca-server",
 	}
 	err := util.RegisterFlags(pflags, serverCfg, tags)
 	if err != nil {
@@ -95,17 +95,6 @@ func RunMain(args []string) error {
 	os.Args = saveOsArgs
 
 	return err
-}
-
-func registerCommonFlags(flags *pflag.FlagSet) {
-	util.FlagString(flags, "ca.keyfile", "", "key.pem",
-		"PEM-encoded key file for certificate issuance")
-	util.FlagString(flags, "ca.certfile", "", "cert.pem",
-		"PEM-encoded certificate file used for certificate issuance")
-	util.FlagString(flags, "tls.keyfile", "", "key.pem",
-		"PEM-encoded key file used for TLS")
-	util.FlagString(flags, "tls.certfile", "", "cert.pem",
-		"PEM-encoded certificate file used for TLS")
 }
 
 // Get a server for the init and start commands
